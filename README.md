@@ -1,4 +1,4 @@
-# Apache Guacamole with Caddy Reverse Proxy
+# Apache Guacamole with Caddy HTTPS Reverse Proxy (Includes automatic TLS Certificate Management)
 
 0. Create your own free domain with duckdns
 1. Prepare the database container following the steps in reference #1
