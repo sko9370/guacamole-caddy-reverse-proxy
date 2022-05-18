@@ -1,0 +1,6 @@
+[your_subdomain].duckdns.org {
+	tls {
+		dns duckdns [duckdns_api] 
+	}
+	reverse_proxy http://guacamole:8080
+}

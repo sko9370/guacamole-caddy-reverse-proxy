@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  guacd:
+    container_name: guacd
+    image: guacamole/guacd
+    restart: unless-stopped
+
+  guacdb:
+    container_name: guacdb
+    image: mariadb/server
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'change_password'
+      MYSQL_DATABASE: 'guacamole_db'
+      MYSQL_USER: 'guacamole_user'
+      MYSQL_PASSWORD: 'change_password'
+    volumes:
+      - guacdb-data:/var/lib/mysql
+
+  guacamole:
+    container_name: guacamole
+    image: guacamole/guacamole
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+      GUACD_HOSTNAME: 'guacd'
+      MYSQL_HOSTNAME: 'guacdb'
+      MYSQL_DATABASE: 'guacamole_db'
+      MYSQL_USER: 'guacamole_user'
+      MYSQL_PASSWORD: 'change_password'
+    depends_on:
+      - guacdb
+      - guacd
+  
+  caddy:
+    container_name: caddy
+    image: caddy:duckdns
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - [Caddyfile_location_on_host]:/etc/caddy/Caddyfile
+
+volumes:
+  guacdb-data:
+  caddy_data:
+  caddy_config:
