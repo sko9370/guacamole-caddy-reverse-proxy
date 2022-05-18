@@ -5,6 +5,7 @@
 - Lightweight, as less setup as possible
 - All containers deployed from a single docker-compose.yml
 
+## Procedure
 1. Create your own free domain with duckdns
 2. Prepare the database container following the steps in reference #1
 3. Create docker image caddy:duckdns using the Dockerfile
